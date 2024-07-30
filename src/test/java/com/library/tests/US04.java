@@ -10,12 +10,13 @@ import com.library.utility.LibraryAPI_Util;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /*
 Feature: As a librarian, I want to create a new user
@@ -71,14 +72,15 @@ public class US04 {
                     .formParam("end_date",      randomUser.get("end_date"))
                     .formParam("address",       randomUser.get("address"))
                     .post(baseURI + "/add_user")
-                    .prettyPeek();
+                    // .prettyPeek()
+                    ;
             JsonPath jsonPath = response.jsonPath();
 
             // Do the assertions
-            Assertions.assertEquals(200, response.statusCode());
-            Assertions.assertEquals("application/json; charset=utf-8", response.contentType());
-            Assertions.assertEquals("The user has been created.", jsonPath.getString("message"));
-            Assertions.assertNotNull(jsonPath.getString("user_id"));
+            assertEquals(200, response.statusCode());
+            assertEquals("application/json; charset=utf-8", response.contentType());
+            assertEquals("The user has been created.", jsonPath.getString("message"));
+            assertNotNull(jsonPath.getString("user_id"));
         }
     }
 
@@ -105,14 +107,15 @@ public class US04 {
                     .formParam("end_date", randomUser.get("end_date"))
                     .formParam("address", randomUser.get("address"))
                     .post(baseURI + "/add_user")
-                    .prettyPeek();
+                    // .prettyPeek()
+                    ;
             JsonPath jsonPath = response.jsonPath();
 
             // Do the assertions for the response
-            Assertions.assertEquals(200, response.statusCode());
-            Assertions.assertEquals("application/json; charset=utf-8", response.contentType());
-            Assertions.assertEquals("The user has been created.", jsonPath.getString("message"));
-            Assertions.assertNotNull(jsonPath.getString("user_id"));
+            assertEquals(200, response.statusCode());
+            assertEquals("application/json; charset=utf-8", response.contentType());
+            assertEquals("The user has been created.", jsonPath.getString("message"));
+            assertNotNull(jsonPath.getString("user_id"));
 
             // Get the DB data
             String userId = jsonPath.getString("user_id");
@@ -124,22 +127,22 @@ public class US04 {
             Map<String, Object> userDB = DB_Util.getRowMap(1);
 
             // Do the assertions for DB
-            Assertions.assertEquals("" + userDB.get("full_name"), "" + randomUser.get("full_name"));
-            Assertions.assertEquals("" + userDB.get("email"), "" + randomUser.get("email"));
+            assertEquals("" + userDB.get("full_name"), "" + randomUser.get("full_name"));
+            assertEquals("" + userDB.get("email"), "" + randomUser.get("email"));
             // Assert.assertEquals("" + userDB.get("password"), "" + randomUser.get("password")); // DB Password is bugged
-            Assertions.assertEquals("" + userDB.get("user_group_id"), "" + randomUser.get("user_group_id"));
-            Assertions.assertEquals("" + userDB.get("status"), "" + randomUser.get("status"));
-            Assertions.assertEquals("" + userDB.get("start_date"), "" + randomUser.get("start_date"));
-            Assertions.assertEquals("" + userDB.get("end_date"), "" + randomUser.get("end_date"));
-            Assertions.assertEquals("" + userDB.get("address"), "" + randomUser.get("address"));
+            assertEquals("" + userDB.get("user_group_id"), "" + randomUser.get("user_group_id"));
+            assertEquals("" + userDB.get("status"), "" + randomUser.get("status"));
+            assertEquals("" + userDB.get("start_date"), "" + randomUser.get("start_date"));
+            assertEquals("" + userDB.get("end_date"), "" + randomUser.get("end_date"));
+            assertEquals("" + userDB.get("address"), "" + randomUser.get("address"));
 
             // Get the UI data
             LoginPage loginPage = new LoginPage();
             loginPage.login((String) randomUser.get("email"), (String) randomUser.get("password"));
 
-            // Do the assetions for UI
+            // Do the assertions for UI
             BrowserUtil.waitForVisibility(loginPage.accountHolderName, 5);
-            Assertions.assertEquals(loginPage.accountHolderName.getText(), randomUser.get("full_name"));
+            assertEquals(loginPage.accountHolderName.getText(), randomUser.get("full_name"));
         }
     }
 }

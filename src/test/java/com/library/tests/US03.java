@@ -1,6 +1,5 @@
 package com.library.tests;
 
-
 import com.library.base.TestBase_DB;
 import com.library.base.TestBase_UI;
 import com.library.pages.BookPage;
@@ -25,6 +24,7 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 /*
 Feature: As a librarian, I want to create a new book
@@ -78,14 +78,15 @@ public class US03 {
                     .formParam("book_category_id", randomBook.get("book_category_id"))
                     .formParam("description",      randomBook.get("description"))
                     .post(baseURI + "/add_book")
-                    .prettyPeek();
+                    // .prettyPeek()
+                    ;
             JsonPath jsonPath = response.jsonPath();
 
             // Do the assertions
-            Assertions.assertEquals(200, response.statusCode());
-            Assertions.assertEquals("application/json; charset=utf-8", response.contentType());
-            Assertions.assertEquals("The book has been created.", jsonPath.getString("message"));
-            Assertions.assertNotNull(jsonPath.getString("book_id"));
+            assertEquals(200, response.statusCode());
+            assertEquals("application/json; charset=utf-8", response.contentType());
+            assertEquals("The book has been created.", jsonPath.getString("message"));
+            assertNotNull(jsonPath.getString("book_id"));
         }
     }
 
@@ -110,14 +111,15 @@ public class US03 {
                     .formParam("book_category_id", randomBook.get("book_category_id"))
                     .formParam("description",      randomBook.get("description"))
                     .post(baseURI + "/add_book")
-                    .prettyPeek();
+                    // .prettyPeek()
+                    ;
             JsonPath jsonPath = response.jsonPath();
 
             // Do the assertions for API
-            Assertions.assertEquals(200, response.statusCode());
-            Assertions.assertEquals("application/json; charset=utf-8", response.contentType());
-            Assertions.assertEquals("The book has been created.", jsonPath.getString("message"));
-            Assertions.assertNotNull(jsonPath.getString("book_id"));
+            assertEquals(200, response.statusCode());
+            assertEquals("application/json; charset=utf-8", response.contentType());
+            assertEquals("The book has been created.", jsonPath.getString("message"));
+            assertNotNull(jsonPath.getString("book_id"));
 
             // Get the API data
             String nameAPI             = "" + randomBook.get("name");
@@ -166,23 +168,23 @@ public class US03 {
             String descriptionDB    = DB_columns.get(6);
 
             // Do the API-DB-UI assertions
-            Assertions.assertEquals(nameDB, nameAPI);
-            Assertions.assertEquals(nameUI, nameAPI);
+            assertEquals(nameDB, nameAPI);
+            assertEquals(nameUI, nameAPI);
 
-            Assertions.assertEquals(isbnDB, isbnAPI);
-            Assertions.assertEquals(isbnUI, isbnAPI);
+            assertEquals(isbnDB, isbnAPI);
+            assertEquals(isbnUI, isbnAPI);
 
-            Assertions.assertEquals(yearDB, yearAPI);
-            Assertions.assertEquals(yearUI, yearAPI);
+            assertEquals(yearDB, yearAPI);
+            assertEquals(yearUI, yearAPI);
 
-            Assertions.assertEquals(authorDB, authorAPI);
-            Assertions.assertEquals(authorUI, authorAPI);
+            assertEquals(authorDB, authorAPI);
+            assertEquals(authorUI, authorAPI);
 
-            Assertions.assertEquals(bookCategoryIdDB, bookCategoryIdAPI);
-            // Assertions.assertEquals(bookCategoryIdUI, bookCategoryIdAPI);
+            assertEquals(bookCategoryIdDB, bookCategoryIdAPI);
+            // assertEquals(bookCategoryIdUI, bookCategoryIdAPI);
 
-            Assertions.assertEquals(descriptionDB, descriptionAPI);
-            Assertions.assertEquals(descriptionUI, descriptionAPI);
+            assertEquals(descriptionDB, descriptionAPI);
+            assertEquals(descriptionUI, descriptionAPI);
         }
     }
 }

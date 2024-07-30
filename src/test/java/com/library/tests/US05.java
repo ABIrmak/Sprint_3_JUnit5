@@ -5,7 +5,6 @@ import com.library.utility.LibraryAPI_Util;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,6 +12,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /*
 Feature: : As a user, I want to view my own user information using the API
@@ -56,16 +57,17 @@ public class US05 {
                     .contentType("application/x-www-form-urlencoded")
                     .formParam("token", token)
                     .post(baseURI + "/decode")
-                    .prettyPeek();
+                    // .prettyPeek()
+                    ;
             JsonPath jsonPath = response.jsonPath();
 
             // Do the assertions
-            Assertions.assertEquals(200, response.statusCode());
-            Assertions.assertEquals("application/json; charset=utf-8", response.contentType());
-            Assertions.assertEquals(user_group_id, jsonPath.getInt("user_group_id"));
-            Assertions.assertEquals(email, jsonPath.getString("email"));
-            Assertions.assertNotNull(jsonPath.getString("full_name"));
-            Assertions.assertNotNull(jsonPath.getString("id"));
+            assertEquals(200, response.statusCode());
+            assertEquals("application/json; charset=utf-8", response.contentType());
+            assertEquals(user_group_id, jsonPath.getInt("user_group_id"));
+            assertEquals(email, jsonPath.getString("email"));
+            assertNotNull(jsonPath.getString("full_name"));
+            assertNotNull(jsonPath.getString("id"));
         }
 
         public static List<Arguments> getExamples() {

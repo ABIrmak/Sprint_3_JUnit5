@@ -7,6 +7,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /*
 Feature: As a user, I want to search for a specific user by their id
         so that I can quickly find the information I need.
@@ -45,12 +47,12 @@ public class US02 {
             JsonPath jsonPath = response.jsonPath();
 
             // Do the assertions
-            Assertions.assertEquals(200, response.statusCode());
-            Assertions.assertEquals("application/json; charset=utf-8", response.contentType());
-            Assertions.assertEquals(1, jsonPath.getInt("id"));
-            Assertions.assertNotNull(jsonPath.getString("full_name"));
-            Assertions.assertNotNull(jsonPath.getString("email"));
-            Assertions.assertNotNull(jsonPath.getString("password"));
+            assertEquals(200, response.statusCode());
+            assertEquals("application/json; charset=utf-8", response.contentType());
+            assertEquals(1, jsonPath.getInt("id"));
+            assertNotNull(jsonPath.getString("full_name"));
+            assertNotNull(jsonPath.getString("email"));
+            assertNotNull(jsonPath.getString("password"));
         }
     }
 }
