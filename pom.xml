@@ -112,6 +112,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
+                    <forkCount>4</forkCount>
+                    <reuseForks>true</reuseForks>
                     <testFailureIgnore>true</testFailureIgnore>
                     <includes>
                         <include>**/tests/*.java</include>
